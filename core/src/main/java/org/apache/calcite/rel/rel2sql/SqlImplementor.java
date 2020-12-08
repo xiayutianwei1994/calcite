@@ -150,7 +150,7 @@ public abstract class SqlImplementor {
           .build();
 
   protected SqlImplementor(SqlDialect dialect) {
-    this.dialect = requireNonNull(dialect);
+    this.dialect = requireNonNull(dialect, "dialect");
   }
 
   /** Visits a relational expression that has no parent. */
@@ -2017,10 +2017,10 @@ public abstract class SqlImplementor {
     public Builder(RelNode rel, List<Clause> clauses, SqlSelect select,
         Context context, boolean anon,
         @Nullable Map<String, RelDataType> aliases) {
-      this.rel = requireNonNull(rel);
+      this.rel = requireNonNull(rel, "rel");
       this.clauses = ImmutableList.copyOf(clauses);
-      this.select = requireNonNull(select);
-      this.context = requireNonNull(context);
+      this.select = requireNonNull(select, "select");
+      this.context = requireNonNull(context, "context");
       this.anon = anon;
       this.aliases = aliases;
     }

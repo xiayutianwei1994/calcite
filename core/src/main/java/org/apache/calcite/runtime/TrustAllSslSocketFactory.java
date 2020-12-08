@@ -44,15 +44,15 @@ public class TrustAllSslSocketFactory extends SocketFactoryImpl {
 
   protected TrustAllSslSocketFactory() {
     TrustManager[] trustAllCerts = {new DummyTrustManager()};
-    SSLSocketFactory factory = null;
+    SSLSocketFactory sslSocketFactory = null;
     try {
       SSLContext sc = SSLContext.getInstance("SSL");
       sc.init(null, trustAllCerts, new SecureRandom());
-      factory = sc.getSocketFactory();
+      sslSocketFactory = sc.getSocketFactory();
     } catch (Exception e) {
       e.printStackTrace();
     }
-    this.sslSocketFactory = requireNonNull(factory, "sslSocketFactory");
+    this.sslSocketFactory = requireNonNull(sslSocketFactory, "sslSocketFactory");
   }
 
   @Override public Socket createSocket() throws IOException {

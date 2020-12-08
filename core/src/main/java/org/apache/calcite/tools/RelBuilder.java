@@ -518,8 +518,8 @@ public class RelBuilder {
    * given alias. Searches for the relation starting at the top of the
    * stack. */
   public RexNode field(int inputCount, String alias, String fieldName) {
-    requireNonNull(alias);
-    requireNonNull(fieldName);
+    requireNonNull(alias, "alias");
+    requireNonNull(fieldName, "fieldName");
     final List<String> fields = new ArrayList<>();
     for (int inputOrdinal = 0; inputOrdinal < inputCount; ++inputOrdinal) {
       final Frame frame = peek_(inputOrdinal);
@@ -891,7 +891,7 @@ public class RelBuilder {
     if (groupSet.length() > peek().getRowType().getFieldCount()) {
       throw new IllegalArgumentException("out of bounds: " + groupSet);
     }
-    requireNonNull(groupSets);
+    requireNonNull(groupSets, "groupSets");
     final ImmutableList<RexNode> nodes = fields(groupSet);
     return groupKey_(nodes, Util.transform(groupSets, this::fields));
   }
@@ -1684,7 +1684,7 @@ public class RelBuilder {
             cluster.traitSetOf(Convention.NONE),
             frame.rel,
             withOrdinality,
-            requireNonNull(itemAliases))));
+            requireNonNull(itemAliases, "itemAliases"))));
     return this;
   }
 
@@ -3022,7 +3022,7 @@ public class RelBuilder {
    * {@link org.apache.calcite.rel.hint.Hintable}
    */
   public RelBuilder hints(Iterable<RelHint> hints) {
-    requireNonNull(hints);
+    requireNonNull(hints, "hints");
     final List<RelHint> relHintList = hints instanceof List ? (List<RelHint>) hints
         : Lists.newArrayList(hints);
     if (relHintList.isEmpty()) {
@@ -3121,7 +3121,7 @@ public class RelBuilder {
     GroupKeyImpl(ImmutableList<RexNode> nodes,
         @Nullable ImmutableList<ImmutableList<RexNode>> nodeLists,
         @Nullable String alias) {
-      this.nodes = requireNonNull(nodes);
+      this.nodes = requireNonNull(nodes, "nodes");
       this.nodeLists = nodeLists;
       this.alias = alias;
     }
@@ -3160,7 +3160,7 @@ public class RelBuilder {
         boolean approximate, boolean ignoreNulls, @Nullable RexNode filter,
         @Nullable String alias, ImmutableList<RexNode> operands,
         ImmutableList<RexNode> orderKeys) {
-      this.aggFunction = requireNonNull(aggFunction);
+      this.aggFunction = requireNonNull(aggFunction, "aggFunction");
       // If the aggregate function ignores DISTINCT,
       // make the DISTINCT flag FALSE.
       this.distinct = distinct
@@ -3168,8 +3168,8 @@ public class RelBuilder {
       this.approximate = approximate;
       this.ignoreNulls = ignoreNulls;
       this.alias = alias;
-      this.operands = requireNonNull(operands);
-      this.orderKeys = requireNonNull(orderKeys);
+      this.operands = requireNonNull(operands, "operands");
+      this.orderKeys = requireNonNull(orderKeys, "orderKeys");
       if (filter != null) {
         if (filter.getType().getSqlTypeName() != SqlTypeName.BOOLEAN) {
           throw RESOURCE.filterMustBeBoolean().ex();
@@ -3309,7 +3309,7 @@ public class RelBuilder {
     private final AggregateCall aggregateCall;
 
     AggCallImpl2(AggregateCall aggregateCall) {
-      this.aggregateCall = requireNonNull(aggregateCall);
+      this.aggregateCall = requireNonNull(aggregateCall, "aggregateCall");
     }
 
     @Override public String toString() {

@@ -352,8 +352,8 @@ public final class SqlParserUtil {
   public static String strip(String s, @Nullable String startQuote,
       @Nullable String endQuote, @Nullable String escape, Casing casing) {
     if (startQuote != null) {
-      return stripQuotes(s, Objects.requireNonNull(startQuote),
-          Objects.requireNonNull(endQuote), Objects.requireNonNull(escape),
+      return stripQuotes(s, Objects.requireNonNull(startQuote, "startQuote"),
+          Objects.requireNonNull(endQuote, "endQuote"), Objects.requireNonNull(escape, "escape"),
           casing);
     } else {
       return toCase(s, casing);
@@ -612,7 +612,7 @@ public final class SqlParserUtil {
       int start,
       int end,
       T o) {
-    requireNonNull(list);
+    requireNonNull(list, "list");
     Preconditions.checkArgument(start < end);
     for (int i = end - 1; i > start; --i) {
       list.remove(i);
