@@ -149,6 +149,8 @@ public class RelSubset extends AbstractRelNode {
     super(cluster, traits);
     this.set = set;
     assert traits.allSimple();
+
+
     computeBestCost(cluster, cluster.getPlanner());
     upperBound = bestCost;
   }
